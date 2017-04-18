@@ -13,7 +13,7 @@ class MainApp extends Component {
   state = {
     links: [
       {title:'Tokopedia', url: 'https://www.tokopedia.com/'},
-      {title:'Google', url: 'https://www.google.com/'},
+      {title:'detikcom', url: 'https://www.detik.com/'},
       {title:'Amazon', url: 'https://www.amazon.com/'},
       {title:'Youtube', url: 'https://youtube.com/'},
     ],
@@ -44,7 +44,7 @@ class MainApp extends Component {
 
     return (
       <View style={styles.content}>
-        <Text>Home</Text>
+        <Text>Beranda</Text>
         <View>
           {this.state.links.map(this.renderButton)}
         </View>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     flex: 1,
-    margin: 10,
+    margin: 40,
     backgroundColor: '#3ce7e4',
     borderRadius: 3,
     padding: 10,
