@@ -1,67 +1,89 @@
-import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import React, { Component } from 'react';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Text,
+  Navigator,
+} from 'react-native';
+import Browser from './BrowserView';
 
-const playIcon = require('./images/play.png');
-const volumeIcon = require('./images/sound.png');
-const hdIcon = require('./images/hd-sign.png');
-const fullScreenIcon = require('./images/full-screen.png');
-const remoteImage = require('./images/bg.jpg');
+class MainApp extends Component {
 
-const MainApp = () => {
-  return (
-    <Image source={remoteImage} style={styles.fullscreen}>
-      <View style={styles.container}>
-        <Image source={playIcon} style={styles.icon} />
-        <Image source={volumeIcon} style={styles.icon} />
-        <View style={styles.progress}>
-          <View style={styles.progressBar} />
+  state = {
+    links: [
+      {title:'Tokopedia', url: 'https://www.tokopedia.com/'},
+      {title:'Google', url: 'https://www.google.com/'},
+      {title:'Amazon', url: 'https://www.amazon.com/'},
+      {title:'Youtube', url: 'https://youtube.com/'},
+    ],
+  };
+
+  onPressButton(url) {
+    this.refs.navigator.push({ url });
+  }
+
+  renderButton = (btn, index) => {
+    return (
+      <TouchableOpacity
+        key={index}
+        onPress={() => this.onPressButton(btn.url)}
+        style={styles.btn}
+      >
+        <Text style={styles.text}>{btn.title}</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  renderScene = (route, navigator) => {
+    if (route.url) {
+      return (
+        <Browser url={route.url} navigator={navigator} />
+      );
+    }
+
+    return (
+      <View style={styles.content}>
+        <Text>Home</Text>
+        <View>
+          {this.state.links.map(this.renderButton)}
         </View>
-        <Image source={hdIcon} style={styles.icon} />
-        <Image source={fullScreenIcon} style={styles.icon} />
       </View>
-    </Image>
-  );
-};
+    );
+  }
+
+  render() {
+    return (
+      <Navigator
+        ref="navigator"
+        renderScene={this.renderScene}
+        initialRoute={{}}
+        configureScene={(route) => (
+          Navigator.SceneConfigs.FloatFromBottom
+        )}
+      />
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  fullscreen: {
+  content: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  container: {
-    position: 'absolute',
-    backgroundColor: '#202020',
-    borderRadius: 5,
-    flexDirection: 'row',
-    height: 50,
-    padding: 5,
-    paddingTop: 16,
-    bottom: 30,
-    right: 10,
-    left: 10,
-    borderWidth: 1,
-    borderColor: '#303030',
-  },
-  icon: {
-    tintColor: '#fff',
-    height: 16,
-    width: 16,
-    marginLeft: 5,
-    marginRight: 5,
-  },
-  progress: {
-    backgroundColor: '#000',
-    borderRadius: 7,
+  btn: {
     flex: 1,
-    height: 14,
     margin: 10,
-    marginTop: 2,
+    backgroundColor: '#3ce7e4',
+    borderRadius: 3,
+    padding: 10,
+    paddingRight: 30,
+    paddingLeft: 30,
   },
-  progressBar: {
-    backgroundColor: '#bf161c',
-    borderRadius: 5,
-    height: 10,
-    margin: 2,
-    width: 80,
+  text: {
+    color: '#fff',
+    textAlign: 'center',
   },
 });
 

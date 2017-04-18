@@ -1,4 +1,4 @@
-package com.tugas11;
+package com.webview;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "Tugas11";
+        return "WebView";
     }
 }

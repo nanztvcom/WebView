@@ -11,4 +11,4 @@ import {
 import MainApp from './src/MainApp';
 
 
-AppRegistry.registerComponent('Tugas11', () => MainApp);
+AppRegistry.registerComponent('WebView', () => MainApp);
